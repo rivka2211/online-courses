@@ -1,0 +1,44 @@
+::contentReference[oaicite:0]{index=0}{}
+<mat-card>
+    <h2>{{ isLoginMode ? 'Login' : 'Register' }}</h2>
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <!-- Name Field (Visible in Registration Mode) -->
+        <mat-form-field appearance="fill" @If="!isLoginMode">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="name"/>
+            <mat-error @If="authForm.get('email')?.hasError('required')">
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Email Field -->
+        <mat-form-field appearance="fill">    
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+            <mat-error @If="authForm.get('email')?.hasError('required')">
+                This field is required
+            </mat-error>
+            <mat-error @If="authForm.get('email')?.hasError('email')">
+                Please enter a valid email address
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" />
+            <mat-error @If="authForm.get('password')?.hasError('required')">
+                This field is required
+            </mat-error>
+            <mat-error @If="authForm.get('password')?.hasError('minlength')">
+                Password must be at least 6 characters long
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">
+            {{ isLoginMode ? 'Login' : 'Register' }}
+        </button>
+    </form>
+    <button mat-button (click)="onSwitchMode()">
+        {{ isLoginMode ? 'dont have an account? sign up here': 'already have an account? log in here' }}
+    </button>
+</mat-card>
