@@ -1,0 +1,20 @@
+<mat-card class="home-card">
+    <h1 class="title">Welcome to <span class="highlight">LearnSphere</span></h1>
+    <p class="subtitle">
+      LearnSphere is here to make learning easier and more effective. 
+      Our mission is to enhance knowledge, promote growth, and support learners in their educational journey.
+    </p>
+  
+    <div class="image-container">
+      <button mat-icon-button (click)="prevImage()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      
+      <img [src]="images[currentIndex]" class="image-display" alt="Educational Image">
+      
+      <button mat-icon-button (click)="nextImage()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+  
