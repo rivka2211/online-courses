@@ -20,6 +20,7 @@ export class HomePageComponent {
     '/images/d4.jpg',
     '/images/d5.jpg',
     '/images/d6.jpg',
+    '/images/d7.jpg', '/images/d8.jpg', '/images/d9.jpg',
   ];
   
   
