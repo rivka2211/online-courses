@@ -17,6 +17,7 @@
       </button>
     </div>
   </mat-card>
-@if(isConnected){
-  <app-courses></app-courses>
-}
+
+
+  <app-courses *ngIf="isConnected"></app-courses>
+

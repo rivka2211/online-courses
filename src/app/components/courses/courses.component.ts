@@ -45,7 +45,7 @@ export class CoursesComponent implements OnInit {
 
   async enroll(courseId: number) {
     try {
-      await this.courseService.enrollStudentInCourse(courseId,AuthService.getCurrentUser().userId);
+      await this.courseService.enrollStudentInCourse(courseId,this.authService.getCurrentUser().userId);
       this.enrolledCourses.add(courseId);
       this.snackBar.open('Enrolled successfully!', 'Close', { duration: 3000 });
     } catch (error) {

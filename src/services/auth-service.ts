@@ -9,62 +9,79 @@ import { User } from '../models/user';
 export class AuthService {
 
   private apiUrl = 'http://localhost:3000/api/auth';
-  private static currentUserKey = 'currentUser';
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false); // ברירת מחדל: לא מחובר
+  private currentUserKey = 'currentUser';
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
-
-  private setCurrentUser(user: any): void {
-    localStorage.setItem(AuthService.currentUserKey, JSON.stringify(user));
+  constructor(private http: HttpClient) {
+    if (typeof window !== 'undefined') { 
+      const storedUser = this.getCurrentUser();
+      if (storedUser) {
+        this.isLoggedInSubject.next(true);
+      }
+    }
   }
 
-  // קבלת פרטי המשתמש
-  static getCurrentUser(): any {
-    const userJson = localStorage.getItem(this.currentUserKey);
-    return userJson ? JSON.parse(userJson) : null;
+  private setCurrentUser(user: any): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(this.currentUserKey, JSON.stringify(user));
+    }
+  }
+
+  getCurrentUser(): any {
+    console.log("in getCurrentUser");
+    if (typeof window !== 'undefined') { 
+      let userJson = localStorage.getItem(this.currentUserKey);
+      return userJson ? JSON.parse(userJson) : null;
+    }
+    return null;
+  }
+
+  private hasStoredUser(): boolean {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+    return !!localStorage.getItem(this.currentUserKey);
   }
 
   register(name: string, email: string, password: string, role: string): Observable<User> {
-    console.log("in auth service/register,the details are:", name, email, password, role);
-    const res = this.http.post<User>(`${this.apiUrl}/register`, { name, email, password, role }).pipe(
+    console.log("in auth service/register, the details are:", name, email, password, role);
+    return this.http.post<User>(`${this.apiUrl}/register`, { name, email, password, role }).pipe(
       tap((res: any) => {
-        
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('userId',res.userId);
-        localStorage.setItem('role',res.role);
-      }));
-      this.setCurrentUser({ name, email, password, role });
-      this.isLoggedInSubject.next(true);
-    return res;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('userId', res.userId);
+          localStorage.setItem('role', res.role);
+          this.setCurrentUser({ name, email, userId: res.userId, role: res.role });
+          this.isLoggedInSubject.next(true);
+        }
+      })
+    );
   }
+
   login(email: string, password: string): Observable<any> {
-    console.log("in auth service/login,the details are:", email, password);
+    console.log("in auth service/login, the details are:", email, password);
     return this.http.post<User>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res: any) => {
         console.log(res.token);
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('userId', res.userId);
-        localStorage.setItem('role', res.role);
-
-        this.setCurrentUser({ 
-          email, 
-          password,
-          userId: res.userId,
-          role: res.role 
-        });
-        this.isLoggedInSubject.next(true);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('userId', res.userId);
+          localStorage.setItem('role', res.role);
+          this.setCurrentUser({
+            email,
+            userId: res.userId,
+            role: res.role
+          });
+          this.isLoggedInSubject.next(true);
+        }
       })
     );
   }
 
   logout() {
     console.log("in auth-service/logout");
-    console.log("current user", localStorage.getItem("userId"));
-    localStorage.removeItem('token');
-    localStorage.removeItem(AuthService.currentUserKey);
-    localStorage.removeItem('userId');
-    localStorage.removeItem('role');
-    this.isLoggedInSubject.next(false);
+      localStorage.clear();
+      this.isLoggedInSubject.next(false);
   }
 }

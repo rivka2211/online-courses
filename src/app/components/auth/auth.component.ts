@@ -25,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     HttpClientModule
   ],
-  providers: [ AuthService]
+  // providers: [ AuthService]
 })
 export class AuthComponent {
   authForm: FormGroup;

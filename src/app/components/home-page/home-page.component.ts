@@ -13,8 +13,6 @@ import { AuthService } from '../../../services/auth-service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
   imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatGridListModule, CoursesComponent]
-  ,
-  providers: [ AuthService]
 })
 export class HomePageComponent implements OnInit {
   isConnected = false;
