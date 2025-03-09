@@ -14,35 +14,28 @@ export class AuthService {
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    if (typeof window !== 'undefined') { 
       const storedUser = this.getCurrentUser();
       if (storedUser) {
         this.isLoggedInSubject.next(true);
       }
-    }
   }
 
   private setCurrentUser(user: any): void {
-    if (typeof window !== 'undefined') {
       localStorage.setItem(this.currentUserKey, JSON.stringify(user));
-    }
   }
 
   getCurrentUser(): any {
     console.log("in getCurrentUser");
-    if (typeof window !== 'undefined') { 
       let userJson = localStorage.getItem(this.currentUserKey);
       return userJson ? JSON.parse(userJson) : null;
-    }
-    return null;
   }
 
-  private hasStoredUser(): boolean {
-    if (typeof window === 'undefined') {
-      return false;
-    }
-    return !!localStorage.getItem(this.currentUserKey);
-  }
+  // private hasStoredUser(): boolean {
+  //   if (typeof window === 'undefined') {
+  //     return false;
+  //   }
+  //   return !!localStorage.getItem(this.currentUserKey);
+  // }
 
   register(name: string, email: string, password: string, role: string): Observable<User> {
     console.log("in auth service/register, the details are:", name, email, password, role);

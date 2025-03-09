@@ -5,7 +5,6 @@ import { Lesson } from '../../../models/lesson';
 import { MatDialog } from '@angular/material/dialog';
 import { Course } from '../../../models/course';
 import { LessonDetailsComponent } from '../lesson-details/lesson-details.component';
-import { AuthService } from '../../../services/auth-service';
 import { UserService } from '../../../services/user-service';
 
 @Component({
@@ -28,15 +27,19 @@ export class CourseDetailComponent implements OnInit {
   
   
   ngOnInit(): void {
-    this.course.id = Number(this.route.snapshot.paramMap.get('course.id'));
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('productId');
+      if (id) {
+        this.course.id =parseInt(id);
+      } else {
+        console.error('Product ID not found');
+      }}
+    )
     this.getLessons();
     this.isTeacher=localStorage.getItem('role')=='teacher'
     this.teacherName=this.userService.getUserName(this.course.teacherId);
   }
   
-  addLesson() {
-   alert("add lesson")
-  }
   getLessons(): void {
     this.lessonService.getLessons(this.course.id).subscribe(
       (data) => {
@@ -46,6 +49,9 @@ export class CourseDetailComponent implements OnInit {
         console.error('Error fetching lessons', error);
       }
     );
+  }
+  addLesson() {
+   alert("add lesson")
   }
   editLesson(lessonId: number): void {
     alert("עריכת שיעור")

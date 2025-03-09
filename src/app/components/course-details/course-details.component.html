@@ -5,6 +5,7 @@
   <ul>
     @for (lesson of lessons;track lesson.id){
     <li>
+      <!--   <a [routerLink]="['/courses', courseId, 'lessons', lesson.id]"> -->
       <button mat-button color="primary" (click)="openLessonDialog(lesson.id, course.title, teacherName,course.id)">
         צפה בשיעור
       </button>
