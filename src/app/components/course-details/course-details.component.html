@@ -1,0 +1,22 @@
+<div>
+  <h1>{{course.title }}</h1>
+  <p>{{ course.description }}</p>
+  <h2>רשימת שיעורים</h2>
+  <ul>
+    @for (lesson of lessons;track lesson.id){
+    <li>
+      <button mat-button color="primary" (click)="openLessonDialog(lesson.id, course.title, teacherName,course.id)">
+        צפה בשיעור
+      </button>
+      @if (isTeacher) {
+      <Button variant="contained" color="primary" (click)="editLesson(lesson.id)">ערוך</Button>
+      <Button variant="contained" color="secondary" (click)="deleteLesson(lesson.id)">מחק</Button>
+      }
+    </li>
+    }
+  </ul>
+  @if (isTeacher) {
+  <Button variant="contained" color="primary" (click)="addLesson()">הוסף שיעור</Button>
+  }
+
+</div>

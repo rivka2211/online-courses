@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
@@ -30,7 +30,6 @@ import { HttpClientModule } from '@angular/common/http';
 export class AuthComponent {
   authForm: FormGroup;
   isLoginMode = true;
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -61,13 +60,23 @@ export class AuthComponent {
   
     try {
       if (this.isLoginMode) {
-        this.authService.login(email, password);
+        console.log("in login mode");
+        
+        this.authService.login(email, password).subscribe(
+          (res: any) => {
+            console.log("in login app",res);
+        });
         this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
       } else {
-        this.authService.register(name, email, password, 'student');
+        this.authService.register(name, email, password, 'student').subscribe(
+          (res: any) => {
+            console.log("in register app",res);
+        }
+        );
         this.snackBar.open('Registration successful!', 'Close', { duration: 3000 });
         this.onSwitchMode();
       }
+      this.authForm.reset();
     } catch (error) {
       this.snackBar.open('Authentication failed. Please try again.', 'Close', { duration: 3000 });
     }

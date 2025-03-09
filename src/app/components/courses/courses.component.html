@@ -1,0 +1,14 @@
+<h2>My Courses</h2>
+@if (courses&&courses.length>0){
+<ul #allCourses>
+    @for (course of courses;track course.id){
+    <li>
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+        <p>Teacher ID: {{ course.teacherId }}</p>
+    </li>
+    }
+    @empty {
+    <p>No courses available.</p>}
+</ul>
+}
