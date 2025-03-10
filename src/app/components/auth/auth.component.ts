@@ -13,6 +13,7 @@ import { MatOption } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -31,7 +32,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
 })
 export class AuthComponent {
@@ -40,13 +42,14 @@ export class AuthComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.authForm = this.fb.group({
       name: [{ value: '', disabled: this.isLoginMode }, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: [null, this.isLoginMode ? [] : [Validators.required]]
+      role: ['', this.isLoginMode ? [] : [Validators.required]]
     });
   }
 
@@ -54,8 +57,10 @@ export class AuthComponent {
     this.isLoginMode = !this.isLoginMode;
     if (this.isLoginMode) {
       this.authForm.get('name')?.disable();
+      this.authForm.get('role')?.clearValidators();
     } else {
       this.authForm.get('name')?.enable();
+      this.authForm.get('role')?.setValidators([Validators.required]);
     }
   }
 
@@ -72,10 +77,12 @@ export class AuthComponent {
         this.authService.login(email, password).subscribe(
           (res) => {
             console.log("in login app", res);
-            if (res.userId)
+              this.router.navigate(['/courses']);
               this.snackBar.open("Login successful!", 'Close', { duration: 3000 });
-            else
+            },
+            (error) => {
               this.snackBar.open("Login failed!", 'Close', { duration: 3000 });
+              console.error('Login failed', error);
           });
       } else {
         console.log("the role is",role);

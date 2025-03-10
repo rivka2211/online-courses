@@ -15,7 +15,7 @@ mat-list-item{
     font-size: 32px;
     font-weight: bold;
     text-align: center;
-    color: #1976D2; /* צבע כחול MUI */
+    color:var(--dark-pink); 
     margin-bottom: 20px;
     text-transform: uppercase;
 }
@@ -50,9 +50,10 @@ mat-list-item{
 
 /* רקע שקוף לכותרת הקורס */
 .course-title {
-    background: rgba(25, 118, 210, 0.8); /* כחול שקוף */
+    background: var(--dark-pink); 
     color: white;
     padding: 8px 12px;
+    margin-bottom: 8px;
     border-radius: 8px;
     display: inline-block;
     font-size: 20px;

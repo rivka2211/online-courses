@@ -47,7 +47,8 @@
         @if (!isLoginMode) {
         <mat-form-field>
             <mat-label>Select Role</mat-label>
-            <mat-select>
+            <!-- <mat-select> -->
+            <mat-select formControlName="role">
                 <mat-option value="student">Student</mat-option>
                 <mat-option value="teacher">Teacher</mat-option>
                 <mat-option value="admin">Admin</mat-option>
@@ -58,10 +59,11 @@
             </mat-error>
             }
         </mat-form-field>}
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid" routerLink="/courses">
-            {{ isLoginMode ? 'Login' : 'Register' }}
-        </button>
+        <a [routerLink]="['/courses']">
+            <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">
+                {{ isLoginMode ? 'Login' : 'Register' }}
+            </button>
+        </a>
     </form>
     <button mat-button (click)="onSwitchMode()">
         {{ isLoginMode ? "Don't have an account? Sign up here" : 'Already have an account? Log in here' }}

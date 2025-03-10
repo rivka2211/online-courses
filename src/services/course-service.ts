@@ -7,8 +7,8 @@ import { Course } from '../models/course';
 })
 export class CourseService {
 
-  // private apiUrl = 'http://localhost:3000/api/courses';
-  private apiUrl = 'https://coursesangularserver.onrender.com/api/courses';
+  private apiUrl = 'http://localhost:3000/api/courses';
+  // private apiUrl = 'https://coursesangularserver.onrender.com/api/courses';
 
   constructor(private http: HttpClient) { }
 

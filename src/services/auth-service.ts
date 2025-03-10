@@ -9,8 +9,8 @@ import { response } from 'express';
 })
 export class AuthService {
 
-  // private apiUrl = 'http://localhost:3000/api/auth';
-  private apiUrl = 'https://coursesangularserver.onrender.com/api/auth';
+  private apiUrl = 'http://localhost:3000/api/auth';
+  // private apiUrl = 'https://coursesangularserver.onrender.com/api/auth';
   private currentUserKey = 'currentUser';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
@@ -26,7 +26,7 @@ export class AuthService {
       localStorage.setItem(this.currentUserKey, JSON.stringify(user));
   }
 
-  getCurrentUser(): any {
+  getCurrentUser(): User | null {
     console.log("in getCurrentUser");
       let userJson = localStorage.getItem(this.currentUserKey);
       return userJson ? JSON.parse(userJson) : null;

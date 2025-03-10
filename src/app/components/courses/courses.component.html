@@ -1,6 +1,10 @@
-<mat-card class="courses-container">
+<main class="courses-container">
     <h2 class="courses-title">📚 All Courses</h2>
-
+    @if(!isStudent) {
+    <button mat-raised-button color="primary" (click)="openAddCourseModal()">
+        Add Course
+    </button>
+    }
     @if (courses && courses.length > 0) {
     <mat-list #allCourses>
         @for (course of courses; track course.id) {
@@ -8,7 +12,9 @@
             <a [routerLink]="['/courses', course.id]" course=[course] class="course-link">
                 <mat-card class="course-card">
                     <mat-card-header>
-                        <mat-card-title class="course-title">{{ course.title }}</mat-card-title>
+
+                        <mat-card-title class="course-title" style="padding-top: 8px;">{{ course.title
+                            }}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <p>{{ course.description }}</p>
@@ -16,12 +22,23 @@
                     </mat-card-content>
                 </mat-card>
             </a>
+            @if(isStudent) {
             <div class="course-actions">
                 <button mat-raised-button [color]="isEnrolled(course.id) ? 'warn' : 'primary'"
                     (click)="isEnrolled(course.id) ? leave(course.id) : enroll(course.id)">
                     {{ isEnrolled(course.id) ? 'Leave Course' : 'Join Course' }}
                 </button>
+            </div>}
+            @else {
+            <div class="course-actions">
+                <button mat-raised-button color="warn" (click)="deleteCourse(course.id)">
+                    Delete
+                </button>
+                <button mat-raised-button color="primary" (click)="openEditCourseModal(course)">
+                    Edit
+                </button>
             </div>
+            }
 
         </mat-list-item>
         }
@@ -30,4 +47,4 @@
         }
     </mat-list>
     }
-</mat-card>
+</main>

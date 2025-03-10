@@ -1,0 +1,27 @@
+add course modal
+<mat-dialog-content>
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" fullWidth>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fullWidth>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fullWidth>
+      <mat-label>Teacher ID</mat-label>
+      <input matInput formControlName="teacherId" />
+    </mat-form-field>
+
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-button color="primary" type="submit" [disabled]="!courseForm.valid">
+        {{ data ? 'Update Course' : 'Add Course' }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
+
