@@ -6,10 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users';
-  
-  constructor(private http: HttpClient) {}
-  
+  // private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = 'https://coursesangularserver.onrender.com/api/users';
+
+  constructor(private http: HttpClient) { }
+
   getUser(id: string): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(`${this.apiUrl}/${id}`, {
@@ -20,10 +21,11 @@ export class UserService {
     let myname: string = '';
     try {
       this.getUser(id).subscribe(data => {
-      myname= data.name|| '';})
+        myname = data.name || '';
+      })
     } catch (error) {
       console.log(error);
-    } 
+    }
     return myname;
   }
   updateUser(id: string, userData: any): Observable<any> {

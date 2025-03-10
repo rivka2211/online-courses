@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../models/user';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/api/auth';
+  // private apiUrl = 'http://localhost:3000/api/auth';
+  private apiUrl = 'https://coursesangularserver.onrender.com/api/auth';
   private currentUserKey = 'currentUser';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
@@ -54,7 +56,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     console.log("in auth service/login, the details are:", email, password);
-    return this.http.post<User>(`${this.apiUrl}/login`, { email, password }).pipe(
+    var response= this.http.post<User>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((res: any) => {
         console.log(res.token);
         if (typeof window !== 'undefined') {
@@ -70,6 +72,7 @@ export class AuthService {
         }
       })
     );
+    return response;
   }
 
   logout() {
