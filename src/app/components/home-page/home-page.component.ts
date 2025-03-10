@@ -6,13 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CoursesComponent } from "../courses/courses.component";
 import { AuthService } from '../../../services/auth-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatGridListModule, CoursesComponent]
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatGridListModule, RouterModule]
 })
 export class HomePageComponent implements OnInit {
   isConnected = false;

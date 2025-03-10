@@ -1,9 +1,10 @@
 .home-card {
     text-align: center;
     padding: 2rem;
-    max-width: 95%;
+    /* max-width: 95%; */
+    max-height: 100vh;
     margin: auto;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.079);
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.079); */
   }
   
   .title {
@@ -38,5 +39,9 @@
     height: 300px;
     object-fit: cover;
     border-radius: 10px;
+  }
+  .btn{
+   max-width: fit-content;
+   margin: auto;
   }
   

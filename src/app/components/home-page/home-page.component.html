@@ -1,23 +1,31 @@
 <mat-card class="home-card">
-    <h1 class="title">Welcome to <span class="highlight">LearnSphere</span></h1>
-    <p class="subtitle">
-      LearnSphere is here to make learning easier and more effective. 
-      Our mission is to enhance knowledge, promote growth, and support learners in their educational journey.
-    </p>
-  
-    <div class="image-container">
-      <button mat-icon-button (click)="prevImage()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      
-      <img [src]="images[currentIndex]" class="image-display" alt="Educational Image">
-      
-      <button mat-icon-button (click)="nextImage()">
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
-    </div>
-  </mat-card>
+  <h1 class="title">Welcome to <span class="highlight">LearnSphere</span></h1>
+  <p class="subtitle">
+    LearnSphere is here to make learning easier and more effective.
+    Our mission is to enhance knowledge, promote growth, and support learners in their educational journey.
+  </p>
 
+  <div class="image-container">
+    <button mat-icon-button (click)="prevImage()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
 
-  <app-courses *ngIf="isConnected"></app-courses>
+    <img [src]="images[currentIndex]" class="image-display" alt="Educational Image">
 
+    <button mat-icon-button (click)="nextImage()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  <mat-card-actions>
+    @if (!isConnected) {
+      <a [routerLink]="['/auth']" class="btn">
+        <button mat-flat-button >Login</button>
+      </a>
+    }
+    @else {
+      <a [routerLink]="['/courses']" class="btn">
+        <button mat-flat-button>Get Started</button>
+      </a>
+    }
+  </mat-card-actions>
+</mat-card>
