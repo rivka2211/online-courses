@@ -1,0 +1,71 @@
+
+/* סגנון כללי לכרטיס הקורסים */
+.courses-container {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+   
+}
+mat-list-item{
+    min-height: max-content;
+}
+/* כותרת צבעונית ומודגשת */
+.courses-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #1976D2; /* צבע כחול MUI */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* עיצוב כל קורס */
+.course-item {
+    margin-bottom: 15px;
+     min-height: max-content;
+}
+
+/* הקישור לכל קורס */
+.course-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+}
+
+/* עיצוב הכרטיסים של הקורסים */
+.course-card {
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 15px;
+}
+
+/* אפקט רחף לכרטיס */
+.course-card:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+/* רקע שקוף לכותרת הקורס */
+.course-title {
+    background: rgba(25, 118, 210, 0.8); /* כחול שקוף */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 20px;
+}
+
+/* סגנון כאשר אין קורסים */
+.no-courses {
+    text-align: center;
+    font-size: 18px;
+    color: gray;
+    margin-top: 20px;
+}
+.course-actions {
+    flex-shrink: 0;
+    margin-right: 15px;
+}

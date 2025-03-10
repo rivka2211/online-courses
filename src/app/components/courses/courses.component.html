@@ -1,17 +1,33 @@
-<h2>My Courses</h2>
-@if (courses&&courses.length>0){
-<ul #allCourses>
+<mat-card class="courses-container">
+    <h2 class="courses-title">📚 All Courses</h2>
 
-    @for (course of courses;track course.id){
-    <li>
-        <a [routerLink]="['/courses', course.id]">
-            <h3>{{ course.title }}</h3>
-            <p>{{ course.description }}</p>
-            <p>Teacher ID: {{ course.teacherId }}</p>
-        </a>
-    </li>
+    @if (courses && courses.length > 0) {
+    <mat-list #allCourses>
+        @for (course of courses; track course.id) {
+        <mat-list-item class="course-item">
+            <a [routerLink]="['/courses', course.id]" course=[course] class="course-link">
+                <mat-card class="course-card">
+                    <mat-card-header>
+                        <mat-card-title class="course-title">{{ course.title }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{ course.description }}</p>
+                        <p><strong>Teacher ID:</strong> {{ course.teacherId }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+            <div class="course-actions">
+                <button mat-raised-button [color]="isEnrolled(course.id) ? 'warn' : 'primary'"
+                    (click)="isEnrolled(course.id) ? leave(course.id) : enroll(course.id)">
+                    {{ isEnrolled(course.id) ? 'Leave Course' : 'Join Course' }}
+                </button>
+            </div>
+
+        </mat-list-item>
+        }
+        @empty {
+        <p class="no-courses">No courses available.</p>
+        }
+    </mat-list>
     }
-    @empty {
-    <p>No courses available.</p>}
-</ul>
-}
+</mat-card>

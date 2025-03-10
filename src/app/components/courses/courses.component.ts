@@ -35,7 +35,22 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.loadCourses();
+    this.loadEnrolledCourses();
+}
+
+private async loadEnrolledCourses() {
+  try {
+      (await this.courseService.getEnrolledCourses(this.authService.getCurrentUser().userId))
+          .subscribe({
+              next: (enrolled: Course[]) => {
+                  this.enrolledCourses = new Set(enrolled.map(course => course.id));},
+              error: () => {
+                  this.snackBar.open('Failed to load enrolled courses.', 'Close', { duration: 3000 });
+              }});
+  } catch (error) {
+      this.snackBar.open('Failed to load enrolled courses.', 'Close', { duration: 3000 });
   }
+}
 
   private async loadCourses() {
     try {
